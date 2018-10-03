@@ -10,6 +10,8 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { modificaEmail, modificaSenha } from '../../actions/AutenticacaoActions';
+//import { bindActionCreators } from 'redux';
 
 
 const styles = StyleSheet.create({
@@ -35,14 +37,15 @@ const { container, containerTopo, textInput } = styles;
 const FormLogin = (props) => {
 
     console.log(`props.. ${props}`);
+
     return (
         <View style={container}>
             <View style={containerTopo}>
                 <Text style={{ fontSize: 25 }}>WhatsApp Clone</Text>
             </View>
             <View style={{ flex: 2 }}>
-                <TextInput style={textInput} placeholder='E-mail' value={props.email} />
-                <TextInput style={textInput} placeholder='Senha' value={props.senha} />
+                <TextInput style={textInput} placeholder='E-mail' value={props.email} onChangeText={(email) => props.modificaEmail(email)} />
+                <TextInput style={textInput} placeholder='Senha' value={props.senha} onChangeText={(senha) => props.modificaSenha(senha)} />
                 <TouchableHighlight
                     onPress={() => { Actions.frmCadastro() }}>
                     <Text style={{ fontSize: 20 }}>Ainda não tem cadastro? Cadastre-se</Text>
@@ -61,4 +64,7 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, null)(FormLogin);
+export default connect(mapStateToProps, {
+    modificaEmail,
+    modificaSenha
+})(FormLogin);
