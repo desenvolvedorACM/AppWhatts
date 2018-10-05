@@ -49,14 +49,11 @@ const FormCadastro = props => {
     );
 }
 
-const mapStateToProps = state => {
-    return (
-        {
-            nome: state.AutenticacaoReducer.nome,
-            email: state.AutenticacaoReducer.email,
-            senha: state.AutenticacaoReducer.senha
-        }
-    )
-};
+
+const mapStateToProps = (state) => ({
+    email: state.AutenticacaoReducer.email,
+    senha: state.AutenticacaoReducer.senha,
+    nome: state.AutenticacaoReducer.nome
+});
 
 export default connect(mapStateToProps, null)(FormCadastro);
