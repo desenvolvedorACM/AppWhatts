@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 20,
         height: 45,
-        color: '#FFF'
+        color: '#FFF',
+        marginVertical: 10,
     }
 });
 
@@ -42,12 +43,12 @@ const FormLogin = (props) => {
         <ImageBackground source={ImageFundo} style={{ width: '100%', height: '100%' }}>
             <View style={container}>
                 <View style={containerTopo}>
-                    <Text style={{ fontSize: 25, color: '#FFF' }}>WhatsApp Clone</Text>
+                    <Text style={{ fontSize: 25, color: '#FFF' }}>WhatsApp Fake</Text>
                 </View>
                 <View style={{ flex: 2 }}>
                     <TextInput
                         style={textInput}
-                        placeholder='E-mail'
+                        placeholder='Email'
                         placeholderTextColor='#FFF'
                         value={props.email}
                         onChangeText={(texto) => props.modificaEmail(texto)} />
