@@ -1,14 +1,14 @@
-export const modificaEmail = (email) => {
+export const modificaEmail = (texto) => {
     return {
-        type: 'modifica_mail',
-        payload: email
+        type: 'modifica_email',
+        payload: texto
     }
 }
 
-export const modificaSenha = (senha) => {
+export const modificaSenha = (texto) => {
     return {
         type: 'modifica_senha',
-        payload: senha
+        payload: texto
     }
 }
 
@@ -18,7 +18,3 @@ export const modificaNome = (texto) => {
         payload: texto
     }
 }
-
-
-
-

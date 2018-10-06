@@ -5,10 +5,37 @@ import { createStore } from 'redux';
 
 import Routing from './src/Routes';
 import reducers from './src/reducers';
+import firebase from 'firebase';
 
-export default props => (
-  <Provider store={createStore(reducers)}>
-    <Routing />
-  </Provider>
-);
+//COMPONENTE FUNCIONAL.
+//STATELESS COMPONENT.
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
 
+
+  //ANTES DE RENDERIZAR O COMPONENTE.
+  componentWillMount() {
+    // Initialize Firebase
+    firebase.initializeApp({
+      apiKey: "AIzaSyDAqv8EpxLC3hiGfpbMbh6MougcqMJBeaU",
+      authDomain: "whats-app-fake-1cf61.firebaseapp.com",
+      databaseURL: "https://whats-app-fake-1cf61.firebaseio.com",
+      projectId: "whats-app-fake-1cf61",
+      storageBucket: "whats-app-fake-1cf61.appspot.com",
+      messagingSenderId: "1076753399524"
+    });
+  }
+
+  render() {
+    return (
+      <Provider store={createStore(reducers)}>
+        <Routing />
+      </Provider>
+    );
+  }
+}
+
+export default App;
