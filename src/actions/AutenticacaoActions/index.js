@@ -55,16 +55,15 @@ export const autenticarUsuario = ({ email, senha }) => {
                 loginSuccess(dispatch);
             })
             .catch(error => {
-                loginError(dispatch, error);
+                loginFail(dispatch, error);
             });
     }
 }
 
 const loginSuccess = (dispatch) => {
-    dispatch({ type: 'autenticacaoUsuario' });
-    Actions.boasVindas();
+    dispatch({ type: 'loginSuccess' });
 }
 
-const loginError = (dispatch, error) => {
-    dispatch({ type: 'erro', payload: error });
+const loginFail= (dispatch, error) => {
+    dispatch({ type: 'loginFail', payload: error.message });
 }
