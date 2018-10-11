@@ -8,6 +8,7 @@ import reducers from './src/reducers';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 
+
 //COMPONENTE FUNCIONAL.
 //STATELESS COMPONENT.
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
       messagingSenderId: "1076753399524"
     });
   }
+  
 
   render() {
     return (

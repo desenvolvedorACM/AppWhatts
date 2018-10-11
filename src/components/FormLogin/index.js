@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text,
@@ -11,7 +11,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { modificaEmail, modificaSenha } from '../../actions/AutenticacaoActions';
+import { modificaEmail, modificaSenha, autenticarUsuario } from '../../actions/AutenticacaoActions';
 //import { bindActionCreators } from 'redux';
 
 
@@ -33,43 +33,57 @@ const styles = StyleSheet.create({
     }
 });
 
+
 const { container, containerTopo, textInput } = styles;
 const ImageFundo = require('../../imgs/bg.png');
 
-const FormLogin = (props) => {
+class formLogin extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
 
-    console.log(`FormLogin => Props.. ${props}`);
-    return (
-        <ImageBackground source={ImageFundo} style={{ width: '100%', height: '100%' }}>
-            <View style={container}>
-                <View style={containerTopo}>
-                    <Text style={{ fontSize: 25, color: '#FFF' }}>WhatsApp Fake</Text>
+    _autenticarUsuario() {
+        const { email, senha } = this.props;
+        this.props.autenticarUsuario({ email, senha });
+    }
+
+    render() {
+        return (
+            <ImageBackground source={ImageFundo} style={{ width: '100%', height: '100%' }}>
+                <View style={container}>
+                    <View style={containerTopo}>
+                        <Text style={{ fontSize: 25, color: '#FFF' }}>WhatsApp Fake</Text>
+                    </View>
+                    <View style={{ flex: 2 }}>
+                        <TextInput
+                            style={textInput}
+                            placeholder='Email'
+                            placeholderTextColor='#FFF'
+                            value={this.props.email}
+                            onChangeText={(texto) => this.props.modificaEmail(texto)} />
+                        <TextInput secureTextEntry
+                            style={textInput}
+                            placeholder='Senha'
+                            placeholderTextColor='#FFF'
+                            value={this.props.senha}
+                            onChangeText={(texto) => this.props.modificaSenha(texto)} />
+                        <TouchableHighlight
+                            style={{ alignItems: 'center' }}
+                            onPress={() => { Actions.formCadastro() }}>
+                            <Text style={{ fontSize: 20, color: '#FFF' }}>Ainda não tem cadastro? <Text style={{ fontWeight: '600', color: '#FFF' }}>Cadastre-se</Text></Text>
+                        </TouchableHighlight>
+                    </View>
+                    <View style={{ flex: 2 }}>
+                        <Button
+                            title="Acessar"
+                            color='#115E54'
+                            onPress={() => this._autenticarUsuario() } />
+                    </View>
                 </View>
-                <View style={{ flex: 2 }}>
-                    <TextInput
-                        style={textInput}
-                        placeholder='Email'
-                        placeholderTextColor='#FFF'
-                        value={props.email}
-                        onChangeText={(texto) => props.modificaEmail(texto)} />
-                    <TextInput secureTextEntry
-                        style={textInput}
-                        placeholder='Senha'
-                        placeholderTextColor='#FFF'
-                        value={props.senha}
-                        onChangeText={(texto) => props.modificaSenha(texto)} />
-                    <TouchableHighlight
-                        style={{ alignItems: 'center' }}
-                        onPress={() => { Actions.frmCadastro() }}>
-                        <Text style={{ fontSize: 20, color: '#FFF' }}>Ainda não tem cadastro? <Text style={{ fontWeight: '600', color: '#FFF' }}>Cadastre-se</Text></Text>
-                    </TouchableHighlight>
-                </View>
-                <View style={{ flex: 2 }}>
-                    <Button title="Acessar" color='#115E54' onPress={() => false} />
-                </View>
-            </View>
-        </ImageBackground>
-    )
+            </ImageBackground>
+        );
+    }
 }
 
 const mapStateToProps = state => (
@@ -81,5 +95,6 @@ const mapStateToProps = state => (
 
 export default connect(mapStateToProps, {
     modificaEmail,
-    modificaSenha
-})(FormLogin);
+    modificaSenha,
+    autenticarUsuario
+})(formLogin);

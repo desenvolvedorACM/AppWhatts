@@ -1,5 +1,6 @@
 import firebase from 'firebase';
-import { ToastAndroid, AlertAndroid } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import b64 from 'base-64';
 
 export const modificaEmail = (texto) => {
     return {
@@ -23,32 +24,47 @@ export const modificaNome = (texto) => {
 }
 
 export const cadastraUsuario = ({ nome, email, senha }) => {
-
-    firebase.auth().createUserWithEmailAndPassword(email, senha)
-        .then(user => {
-            Sucesso();
-            ToastAndroid.show('Usuário cadastrado com sucesso!!', ToastAndroid.SHORT);
-        })
-        .catch(error => Erro(error));
-}
-
-const Sucesso = () => {
-    return {
-        type: 'sucesso'
+    return dispatch => {
+        firebase.auth().createUserWithEmailAndPassword(email, senha)
+            .then(user => {
+                let emailB64 = b64.encode(email);
+                firebase.database().ref(`/contatos/${emailB64}`)
+                    .push({ nome })
+                    .then(value => cadastroUsuarioSucesso(dispatch));
+            })
+            .catch(error => cadastroUsuarioErro(dispatch, error));
     }
 }
 
-const Erro = (error) => {
-    //let errorCode = error.code;
-    //let errorMessage = error.message;
+const cadastroUsuarioSucesso = (dispatch) => {
+    dispatch({ type: 'cadastra_usuario_sucesso' });
+    Actions.boasVindas();
+}
 
-    switch (error.code) {
-        case 'auth/weak-password':
-            alert('A senha precisa ter no mínimo 6 caracteres!!');
-        case 'auth/email-already-in-use':
-            alert('A senha precisa ter no mínimo 6 caracteres!!');
-        default:
-            alert(`Erro: ${error.code} `);
+const cadastroUsuarioErro = (dispatch, error) => {
+    dispatch({ type: 'erro', payload: error });
+}
+
+export const autenticarUsuario = ({ email, senha }) => {
+    console.log(email);
+    console.log(senha);
+
+    return dispatch => {
+        firebase.auth().signInWithEmailAndPassword(email, senha)
+            .then(user => {
+                loginSuccess(dispatch);
+            })
+            .catch(error => {
+                loginError(dispatch, error);
+            });
     }
+}
 
+const loginSuccess = (dispatch) => {
+    dispatch({ type: 'autenticacaoUsuario' });
+    Actions.boasVindas();
+}
+
+const loginError = (dispatch, error) => {
+    dispatch({ type: 'erro', payload: error });
 }
