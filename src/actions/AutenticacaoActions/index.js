@@ -36,6 +36,7 @@ export const cadastraUsuario = ({ nome, email, senha }) => {
     }
 }
 
+
 const cadastroUsuarioSucesso = (dispatch) => {
     dispatch({ type: 'cadastra_usuario_sucesso' });
     Actions.boasVindas();
@@ -46,24 +47,27 @@ const cadastroUsuarioErro = (dispatch, error) => {
 }
 
 export const autenticarUsuario = ({ email, senha }) => {
-    console.log(email);
-    console.log(senha);
 
     return dispatch => {
         firebase.auth().signInWithEmailAndPassword(email, senha)
-            .then(user => {
-                loginSuccess(dispatch);
-            })
-            .catch(error => {
-                loginFail(dispatch, error);
-            });
+            .then(value => loginUsuarioSucesso(dispatch))
+            .catch(erro => loginUsuarioErro(erro, dispatch));
     }
 }
 
-const loginSuccess = (dispatch) => {
-    dispatch({ type: 'loginSuccess' });
+const loginUsuarioSucesso = (dispatch) => {
+    dispatch (
+        {
+            type: 'login_usuario_sucesso'
+        }
+    );
 }
 
-const loginFail= (dispatch, error) => {
-    dispatch({ type: 'loginFail', payload: error.message });
+const loginUsuarioErro = (erro, dispatch) => {
+    dispatch (
+        {
+            type: 'login_usuario_erro',
+            payload: erro.message
+        }
+    );
 }

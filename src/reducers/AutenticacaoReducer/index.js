@@ -2,13 +2,15 @@ const INITIAL_STATE = {
     nome: '',
     email: '',
     senha: '',
-    erroCadastro: ''
+    erroCadastro: '',
+    erroLogin: ''
 }
 
 
 export default (state = INITIAL_STATE, action) => {
 
-    console.log(`Action ${action.type}`);
+    console.log(`Action ${action}`);
+    alert(email + senha);
 
     switch (action.type) {
         case 'modifica_nome':
@@ -28,6 +30,8 @@ export default (state = INITIAL_STATE, action) => {
             }
         case 'cadastra_usuario_sucesso':
             return { ...state, nome: '', senha: '' }
+        case 'login_usuario_erro':
+            return { ...state, erroLogin: action.payload }
         default:
             return state;
     }

@@ -4,84 +4,64 @@ import {
     Text,
     TextInput,
     Button,
-    StyleSheet,
     TouchableHighlight,
-    ImageBackground
+    Image
 } from 'react-native';
-
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { modificaEmail, modificaSenha, autenticarUsuario } from '../../actions/AutenticacaoActions';
-//import { bindActionCreators } from 'redux';
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-    },
-    containerTopo: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textInput: {
-        fontSize: 20,
-        height: 45,
-        color: '#FFF',
-        marginVertical: 10,
-    }
-});
-
-
-const { container, containerTopo, textInput } = styles;
-const ImageFundo = require('../../imgs/bg.png');
+import {
+    modificaEmail,
+    modificaSenha,
+    autenticarUsuario
+} from '../actions/AutenticacaoActions';
 
 class formLogin extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
 
     _autenticarUsuario() {
         const { email, senha } = this.props;
+
         this.props.autenticarUsuario({ email, senha });
     }
 
     render() {
         return (
-            <ImageBackground source={ImageFundo} style={{ width: '100%', height: '100%' }}>
-                <View style={container}>
-                    <View style={containerTopo}>
-                        <Text style={{ fontSize: 25, color: '#FFF' }}>WhatsApp Fake</Text>
+            <Image style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
+                <View style={{ flex: 1, padding: 10 }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 25, color: '#fff' }}>WhatsApp Clone</Text>
                     </View>
                     <View style={{ flex: 2 }}>
                         <TextInput
-                            style={textInput}
-                            placeholder='Email'
-                            placeholderTextColor='#FFF'
                             value={this.props.email}
-                            onChangeText={(texto) => this.props.modificaEmail(texto)} />
-                        <TextInput secureTextEntry
-                            style={textInput}
-                            placeholder='Senha'
-                            placeholderTextColor='#FFF'
+                            style={{ fontSize: 20, height: 45 }}
+                            placeholder='E-mail' 
+                            placeholderTextColor='#fff'
+                            onChangeText={texto => this.props.modificaEmail(texto)}
+                        />
+                        <TextInput
+                            secureTextEntry
                             value={this.props.senha}
-                            onChangeText={(texto) => this.props.modificaSenha(texto)} />
-                        <TouchableHighlight
-                            style={{ alignItems: 'center' }}
-                            onPress={() => { Actions.formCadastro() }}>
-                            <Text style={{ fontSize: 20, color: '#FFF' }}>Ainda não tem cadastro? <Text style={{ fontWeight: '600', color: '#FFF' }}>Cadastre-se</Text></Text>
+                            style={{ fontSize: 20, height: 45 }}
+                            placeholder='Senha'
+                            placeholderTextColor='#fff'
+                            onChangeText={texto => this.props.modificaSenha(texto)}
+                        />
+                        <Text style={{ color: '#ff0000', fontSize: 18 }}>
+                            {this.props.erroLogin}
+                        </Text>
+                        <TouchableHighlight onPress={() => Actions.formCadastro()}>
+                            <Text style={{ fontSize: 20, color: '#fff' }}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
                     </View>
                     <View style={{ flex: 2 }}>
                         <Button
                             title="Acessar"
                             color='#115E54'
-                            onPress={() => this._autenticarUsuario() } />
+                            onPress={() => this._autenticarUsuario()}
+                        />
                     </View>
                 </View>
-            </ImageBackground>
+            </Image>
         );
     }
 }
@@ -89,12 +69,9 @@ class formLogin extends Component {
 const mapStateToProps = state => (
     {
         email: state.AutenticacaoReducer.email,
-        senha: state.AutenticacaoReducer.senha
+        senha: state.AutenticacaoReducer.senha,
+        erroLogin: state.AutenticacaoReducer.erroLogin
     }
-);
+)
 
-export default connect(mapStateToProps, {
-    modificaEmail,
-    modificaSenha,
-    autenticarUsuario
-})(formLogin);
+export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticarUsuario })(formLogin);
