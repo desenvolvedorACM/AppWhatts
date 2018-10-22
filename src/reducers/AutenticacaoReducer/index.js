@@ -8,9 +8,7 @@ const INITIAL_STATE = {
 
 
 export default (state = INITIAL_STATE, action) => {
-
     console.log(`Action ${action}`);
-    alert(email + senha);
 
     switch (action.type) {
         case 'modifica_nome':

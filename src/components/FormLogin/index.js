@@ -14,7 +14,8 @@ import {
     modificaEmail,
     modificaSenha,
     autenticarUsuario
-} from '../actions/AutenticacaoActions';
+} from '../../actions/AutenticacaoActions';
+
 
 const styles = StyleSheet.create({
     container: {
@@ -34,27 +35,30 @@ const styles = StyleSheet.create({
     },
     erroTextColor: {
         color: '#ff0000',
-        fontSize: 18
+        fontSize: 18,
+        alignItems: 'center',
     }
 });
 
+
 const { container, containerTopo, textInput, erroTextColor } = styles;
-const imageFundo = require('../imgs/bg.png');
+const imageFundo = require('../../imgs/bg.png');
 
 class formLogin extends Component {
 
     _autenticarUsuario() {
         const { email, senha } = this.props;
 
+        //alert(`User: ${email} - Pass: ${senha}`);
         this.props.autenticarUsuario({ email, senha });
     }
 
     render() {
         return (
-            <ImageBackground style={{ width: '100%', height: '100%' }} source={ imageFundo }>
+            <ImageBackground style={{ width: '100%', height: '100%' }} source={imageFundo}>
                 <View style={container}>
                     <View style={containerTopo}>
-                        <Text style={{ fontSize: 25, color: '#fff' }}>WhatsApp Clone</Text>
+                        <Text style={{ fontSize: 25, color: '#fff' }}>WhatsApp "Ela"</Text>
                     </View>
                     <View style={{ flex: 2 }}>
                         <TextInput
@@ -72,13 +76,17 @@ class formLogin extends Component {
                             placeholderTextColor='#fff'
                             onChangeText={texto => this.props.modificaSenha(texto)} />
 
-                        <Text style={erroTextColor}>
-                            {this.props.erroLogin}
-                        </Text>
+                        <View style={{ alignItems: 'center', padding: 8 }}>
+                            <Text style={erroTextColor}>
+                                {this.props.erroLogin}
+                            </Text>
+                        </View>
 
-                        <TouchableHighlight onPress={() => Actions.formCadastro()}>
-                            <Text style={{ fontSize: 20, color: '#fff' }}>Ainda não tem cadastro? Cadastre-se</Text>
-                        </TouchableHighlight>
+                        <View style={{ alignItems: 'center', padding: 8 }}>
+                            <TouchableHighlight onPress={() => Actions.formCadastro()}>
+                                <Text style={{ fontSize: 20, color: '#fff' }}>Ainda não tem cadastro? Cadastre-se</Text>
+                            </TouchableHighlight>
+                        </View>
                     </View>
                     <View style={{ flex: 2 }}>
                         <Button
