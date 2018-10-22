@@ -5,7 +5,8 @@ import {
     TextInput,
     Button,
     TouchableHighlight,
-    Image
+    ImageBackground,
+    StyleSheet
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -14,6 +15,31 @@ import {
     modificaSenha,
     autenticarUsuario
 } from '../actions/AutenticacaoActions';
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10
+    },
+    containerTopo: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textInput: {
+        fontSize: 20,
+        height: 45,
+        color: '#FFF',
+        marginVertical: 10
+    },
+    erroTextColor: {
+        color: '#ff0000',
+        fontSize: 18
+    }
+});
+
+const { container, containerTopo, textInput, erroTextColor } = styles;
+const imageFundo = require('../imgs/bg.png');
 
 class formLogin extends Component {
 
@@ -25,30 +51,31 @@ class formLogin extends Component {
 
     render() {
         return (
-            <Image style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
-                <View style={{ flex: 1, padding: 10 }}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ImageBackground style={{ width: '100%', height: '100%' }} source={ imageFundo }>
+                <View style={container}>
+                    <View style={containerTopo}>
                         <Text style={{ fontSize: 25, color: '#fff' }}>WhatsApp Clone</Text>
                     </View>
                     <View style={{ flex: 2 }}>
                         <TextInput
                             value={this.props.email}
-                            style={{ fontSize: 20, height: 45 }}
-                            placeholder='E-mail' 
+                            style={textInput}
+                            placeholder='E-mail'
                             placeholderTextColor='#fff'
                             onChangeText={texto => this.props.modificaEmail(texto)}
                         />
                         <TextInput
                             secureTextEntry
                             value={this.props.senha}
-                            style={{ fontSize: 20, height: 45 }}
+                            style={textInput}
                             placeholder='Senha'
                             placeholderTextColor='#fff'
-                            onChangeText={texto => this.props.modificaSenha(texto)}
-                        />
-                        <Text style={{ color: '#ff0000', fontSize: 18 }}>
+                            onChangeText={texto => this.props.modificaSenha(texto)} />
+
+                        <Text style={erroTextColor}>
                             {this.props.erroLogin}
                         </Text>
+
                         <TouchableHighlight onPress={() => Actions.formCadastro()}>
                             <Text style={{ fontSize: 20, color: '#fff' }}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
@@ -61,7 +88,7 @@ class formLogin extends Component {
                         />
                     </View>
                 </View>
-            </Image>
+            </ImageBackground>
         );
     }
 }

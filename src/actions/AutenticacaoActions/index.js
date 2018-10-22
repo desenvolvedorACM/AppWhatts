@@ -47,7 +47,6 @@ const cadastroUsuarioErro = (dispatch, error) => {
 }
 
 export const autenticarUsuario = ({ email, senha }) => {
-
     return dispatch => {
         firebase.auth().signInWithEmailAndPassword(email, senha)
             .then(value => loginUsuarioSucesso(dispatch))
