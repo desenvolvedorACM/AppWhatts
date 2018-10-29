@@ -66,8 +66,8 @@ class formLogin extends Component {
                             style={textInput}
                             placeholder='E-mail'
                             placeholderTextColor='#fff'
-                            onChangeText={texto => this.props.modificaEmail(texto)}
-                        />
+                            onChangeText={texto => this.props.modificaEmail(texto)} />
+                            
                         <TextInput
                             secureTextEntry
                             value={this.props.senha}
@@ -76,7 +76,7 @@ class formLogin extends Component {
                             placeholderTextColor='#fff'
                             onChangeText={texto => this.props.modificaSenha(texto)} />
 
-                        <View style={{ alignItems: 'center', padding: 8 }}>
+                        <View style={{ alignItems: 'center', padding: 12 }}>
                             <Text style={erroTextColor}>
                                 {this.props.erroLogin}
                             </Text>
