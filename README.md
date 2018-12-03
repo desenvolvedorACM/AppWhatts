@@ -1,3 +1,2 @@
 # AppWhatts
-AppWhatts
-    this.MyTabs.select(2);
+AppWhatts - aplicativo desenvolvido utilizando react-native,redux,redux-router
